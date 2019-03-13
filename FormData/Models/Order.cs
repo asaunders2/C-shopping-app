@@ -10,11 +10,12 @@ namespace HTMLHelpers.Models
         public Product Prod { get; set; }
         public int Qty { get; set; }
 
-        internal int id;
 
         public string Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
 
+        public string User { get; set; }
+        public string Address { get; set; }
     }
 }

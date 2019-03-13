@@ -73,11 +73,14 @@ namespace HTMLHelpers.Controllers
             foreach(Product p in Products)
             {
                 int qty = Convert.ToInt32(form[p.Id]);
+                ViewBag.Address = Convert.ToString(form[p.Address]);
+                ViewBag.User = Convert.ToString(form[p.User]);
 
                 if (qty > 0)
                 {
-                    orders.Add(new Order { Prod = p, Qty = qty });
+                    orders.Add(new Order { Prod = p, Qty = qty});
                 }
+                
             }
 
             ViewBag.Orders = orders;

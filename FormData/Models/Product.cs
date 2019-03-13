@@ -7,12 +7,12 @@ namespace HTMLHelpers.Models
 {
     public class Product
     {
-        internal int id;
+
 
         public string Id { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-
-
+        public int User { get; internal set; }
+        public int Address { get; internal set; }
     }
 }
