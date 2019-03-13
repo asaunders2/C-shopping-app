@@ -1,0 +1,28 @@
+﻿@model IEnumerable<HTMLHelpers.Models.Discount>
+
+@{
+    ViewBag.Title = "DisplayProducts";
+}
+
+<h2>DisplayProducts</h2>
+
+<form method="post" action="@Url.Action("DisplayDiscounts", "Home")">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price ($)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in ViewBag.Discounts)
+            {
+                <tr>
+                    <td>@p.Name</td>
+                    <td id="price_@p.Id">@p.Price</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

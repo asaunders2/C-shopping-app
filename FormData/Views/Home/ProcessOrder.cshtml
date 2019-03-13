@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "ProcessOrder";
+}
+
+<h2>ProccessOrder</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price ($)</th>
+            <th>Quantity</th>
+            <th>Total ($)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            double total = 0.0;
+            string formattedTotal = String.Format("{0:C}", total);
+            var itemTotal = 0.0;
+            string formattedItemTotal = String.Format("{0:C}", itemTotal);
+
+            foreach (var o in ViewBag.Orders)
+            {
+                total += o.Qty * o.Prod.Price;
+                itemTotal = (o.Qty * o.Prod.Price);
+
+                <tr id='delete'>
+                    <td>@o.Prod.Name</td>
+                    <td id="price_@o.Prod.Id">@o.Prod.Price</td>
+                    <td><input class="form-control qty" type="number" name="@o.Prod.Id" id="@o.Prod.Id" value="@o.Qty" min="0" width="30" /></td>
+                    <td id="total_@o.Prod.Id">$ @total</td>
+                </tr>
+            }
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="3">Total</th>
+            <th id="total">@total</th>
+        </tr>
+    </tfoot>
+</table>
+
+
+@section scripts
+    {
+    <script>
+        $(function () {
+
+            $('.qty').change(function () {
+                var qty = $('#' + this.id).val();
+                var price = $('#price_' + this.id).text();
+                var subtotal = price * qty;
+                $('#total_' + this.id).text(subtotal.toFixed(2));
+                //alert(qty);
+                //alert(price);
+
+                var total = 0;
+                $('.qty').each(function () {
+                    total += Number($('#total_' + this.id).text());
+                    //alert(total);
+                });
+                $('#total_' + this.id).html("$" + total.toFixed(2));
+                $('#total').html("$" + total.toFixed(2));
+            });
+
+
+        });
+    </script>
+}

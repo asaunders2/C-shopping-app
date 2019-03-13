@@ -1,0 +1,58 @@
+﻿@model IEnumerable<HTMLHelpers.Models.Product>
+
+@{
+    ViewBag.Title = "DisplayProducts";
+}
+
+<h2>DisplayProducts</h2>
+
+<form method="post" action="@Url.Action("ProcessOrder", "Home")">
+    <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th>Name</th>
+                <th>Price ($)</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Name</td>
+                    <td id="price_@p.Id">$ @p.Price</td>
+                    <td><input class="form-control qty" type="number" name="@p.Id" id="@p.Id" value="0" min="0" width="30"/></td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit" class="btn btn-default">Submit Order</button>
+</form>
+
+@section scripts
+{
+    <script>
+        $(function () {
+           
+            $('.qty').change(function () {
+                var qty = $('#' + this.id).val();
+                var price = $('#price_' + this.id).text();
+                var subtotal = price * qty;
+                $('#total_' + this.id).text(subtotal.toFixed(2));
+                //alert(qty);
+                //alert(price);
+
+                var total = 0;
+                $('.qty').each(function () {
+                    total += Number($('#total_' + this.id).text()); 
+                    //alert(total);
+                });
+
+                $('#total').html("$" + total.toFixed(2));
+            });
+            
+            
+        });
+    </script>
+}

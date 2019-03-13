@@ -1,0 +1,16 @@
+﻿
+@{
+    ViewBag.Title = "Results";
+}
+
+<h2>Results</h2>
+
+@foreach (var balloon in ViewBag.balloonList)
+{ 
+    <p>Balloon: @balloon</p>
+}
+@*
+    Thank you @name
+    Your order was placed on @date
+    For @balloons
+*@

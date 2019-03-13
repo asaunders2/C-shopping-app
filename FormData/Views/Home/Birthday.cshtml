@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Birthday";
+}
+
+<!-- content -->
+<div class="container" style="min-width:480px;">
+    <h1>Happy Birthday!</h1>
+    <hr />
+    <form role="form" action="" method="post">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.Label("name", "Name")
+                    @Html.TextBox("name", null, new { placeholder = "Enter name", required = "required", @class = "form-control" })
+                </div>
+                <div class="form-group">
+                    @Html.Label("birthday", "Birthday")
+                    @Html.TextBox("birthday", null, new { placeholder = "Enter birthday", required = "required", @class = "form-control" })
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title"><strong>Select your favorite balloons</strong></h3>
+                    </div>
+                    <div class="panel-body">
+
+                        @{
+                            <table id="balloonTable">
+                                <thead>
+                                    @*
+                                        <input type="checkbox" name="selectAll" id="selectAllBalloons" />
+                                    *@
+                                    <div class="checkbox">
+                                        @Html.CheckBox("selectAll", false, new { @name = "selectAll", @class = "selectAllBalloons" })
+                                        @Html.Label("selectAll", "Select all Balloons")
+                                    </div>
+
+                                </thead>
+                                <tbody>
+                                    @foreach (var balloon in ViewBag.balloons)
+                                    {
+                                        
+                                        String ball = Convert.ToString(balloon);
+                                        <tr>
+                                        <div class="checkbox">
+                                            @Html.CheckBox(ball, false, new { @name = "Balloons", @class = "bx" })
+                                            @Html.Label(ball, ball + " balloons")
+                                        </div>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </div>
+            <div class="col-sm-6" style="text-align:center;">
+                @{
+                    foreach (var balloon in ViewBag.balloons)
+                    {
+                        string imagename = "../Content/" + balloon + ".png";
+                        string id = balloon + "Img";
+                        <img src="@imagename" alt="@balloon" class="ball" id="@id" />
+                    }
+                }
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts
+{
+    <script src="../Scripts/birthday.js"></script>
+    <script>
+        $('.selectAllBalloons').change(function (e) {
+            // alert("hi");
+            $('.bx').each(function (e) {
+                var checkedStatus = true;
+                $(this).prop('checked', checkedStatus);
+                // alert(checkedStatus);
+                // make the image visible
+                $('#' + $(this).attr('id') + 'Img').css('visibility', 'visible');
+                // animate balloon In/Out based on checkbox
+                $(this).is(':checked') ?
+                    $('#' + $(this).attr('id') + 'Img').removeClass().addClass('animated bounceInDown') :
+                    $('#' + $(this).attr('id') + 'Img').addClass('animated bounceOutUp');
+            });
+        });
+    </script>
+}
+
+@*
+
+    //Things tried for check all
+
+    <div class"pannel-body">
+
+        @{
+            <table id="balloonTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" name="selectAll" id="selectAllBalloons" />
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var balloon in ViewBag.balloons)
+                    {
+                    String ball = Convert.ToString(balloon);
+                    <div class="checkbox">
+                        @Html.CheckBox(ball, false, new {@name = "Balloons", @class = "bx" })
+                        @Html.Label(ball, ball + " balloons")
+                    </div>
+                    }
+                </tbody>
+            </table>
+            }
+    </div>
+*@
+
+@*
+    <div class="panel-body checkAll">
+        <input type="checkbox" id="checkAll" /><span>Check All Balloons</span>
+    </div>
+    <div class="panel-body">
+        @{
+            foreach (var balloon in ViewBag.balloons)
+            {
+                String ball = Convert.ToString(balloon);
+                <div class="checkbox">
+                    @Html.CheckBox(ball, false, new { @class = "bx" })
+                    @Html.Label(ball, ball + " balloons")
+                </div>
+            }
+        }
+    </div>
+*@
